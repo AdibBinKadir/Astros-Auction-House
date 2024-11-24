@@ -1,20 +1,164 @@
 {% extends 'base.html'%}
 
 {% block content %}
-<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="card" style="width: 36.5rem; height: 9.75rem; flex-shrink: 0; opacity: 0.75; background: #C9C9C9;">
-        <div class="card-body d-flex justify-content-center align-items-center">
-            <h1 class="card-title">
-                <p id="demo"></p>
-            </h1>
+
+    <style>
+        .row-1 {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            cursor: pointer;
+        }
+        .row-1 > div {
+            display: flex;
+        }
+        .row-2{
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10vw;
+            flex-direction: row;
+            font-family: "Encode Sans Semi Condensed", sans-serif;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 2vw;
+            margin-right: 26vw;
+            color: #e0ccb4;
+        }
+    #clock {
+        display: flex;
+        align-items: flex-start;
+    }
+    #clock-img {
+        margin-top: 2vw;
+        width: 2.5vw;
+        align-self: flex-start;
+    }
+        #separator {
+
+            width: 0.5vw;
+            height: 10vw; /* Adjust height as needed */
+            background-color: #e0ccb4;
+            align-self: center;
+            margin-bottom: 4vw;
+        }
+        .timer {
+            font-size: 7vw;
+            font-family: "Lunasima", sans-serif;
+            font-weight: 700;
+            font-style: normal;
+            color: #c8746c;
+            margin-left: 0.5vw;
+            margin-right: 0.5vw;
+            display: flex;
+            flex-direction: column;
+        }
+        .timer-modified{
+            font-size: 7vw;
+            font-family: "Lunasima", sans-serif;
+            font-weight: 700;
+            font-style: normal;
+            margin-left: 0.5vw;
+            margin-right: 0.5vw;
+            display: flex;
+            flex-direction: column;
+            animation: oscillateColor 1s infinite;
+        }
+        .label{
+            color: #e0ccb4;
+            font-size: 2.5vw;
+            font-family: "Anonymous Pro", monospace;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .loader {
+            margin-top: 10vw; /* Adjusted margin to add space on top */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #load-img{
+            animation: oscillateOpacity 1s infinite;
+        }
+        #main{
+            width: 90vw;
+            height: 100vw;
+            margin: auto;
+            display: none;
+        }
+        @keyframes oscillateOpacity {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+    }
+}
+@keyframes oscillateColor {
+    0%, 100% {
+        color: #c8746c;
+    }
+    50%{
+        color: #a82424;
+    }
+}
+    </style>
+    {% load static %}
+    <div class="loader" id="loading">
+    <img src="{% static 'landing_page_anim_-2-removebg-preview.png' %}" alt="" id="load-img">
+        
+    </div>
+    <div id="main">
+    <div class="row-2">next drop in:</div>
+    <div class="row-1">
+        <div id="clock"><img src="{% static 'Mask Group 1.png'%}" alt="" id="clock-img"></div>
+        <div class="timer">
+            <p id="days"></p>
+            <div class="label">Days</div>
+        </div>
+        <div id="separator">&nbsp;</div>
+        <div class="timer">
+            <p id = "hours"></p>
+            <div class="label">Hours</div>
+        </div>
+        <div class="timer" id="colon-1">:</div>
+        <div class="timer">
+            <p id="minutes"></p>
+            <div class="label">Minutes</div>
+        </div>
+        <div class="timer" id="colon-2">:</p></div>
+        <div class="timer">
+            <p id = "seconds"></p>
+            <div class="label">Seconds</div>
         </div>
     </div>
-</div>
+    </div>
+
+
 
 
 <script>
+
+
+window.onload = function() {
+    setTimeout(load, 1000);
+};
+
+var maindiv = document.getElementById("main");
+window.addEventListener('scroll', redirect);
+function redirect(){
+    window.location.href = "landing/";
+}
+
+function load(){
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("main").style.display = "block";
+}
+
 // Set the date we're counting down to
-var countDownDate = new Date("Oct 25, 2024 12:00:00").getTime();
+var countDownDate = new Date("{{date}}").getTime();
+
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -24,6 +168,13 @@ var now = new Date().getTime();
 
 // Find the distance between now and the count down date
 var distance = countDownDate - now;
+if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("hours").innerHTML = 0;
+    document.getElementById("minutes").innerHTML = 0;
+    document.getElementById("seconds").innerHTML = 0;
+    document.getElementById("days").innerHTML = 0;
+}
 
 // Time calculations for days, hours, minutes and seconds
 var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -32,13 +183,25 @@ var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
 // Display the result in the element with id="demo"
-document.getElementById("demo").innerHTML = days + " : " + hours + " : "
-+ minutes + " : " + seconds;
+document.getElementById("hours").innerHTML = hours;
+document.getElementById("minutes").innerHTML = minutes;
+document.getElementById("seconds").innerHTML = seconds;
+document.getElementById("days").innerHTML = days;
+
 
 // If the count down is finished, write some text
 if (distance < 0) {
 clearInterval(x);
-document.getElementById("demo").innerHTML = "EXPIRED";
+document.getElementById("hours").innerHTML = 0;
+document.getElementById("hours").className = "timer-modified";
+document.getElementById("minutes").innerHTML = 0;
+document.getElementById("minutes").className = "timer-modified";
+document.getElementById("seconds").innerHTML = 0;
+document.getElementById("seconds").className = "timer-modified";
+document.getElementById("days").innerHTML = 0;
+document.getElementById("days").className = "timer-modified";
+document.getElementById("colon-1").className = "timer-modified";
+document.getElementById("colon-2").className = "timer-modified";
 }
 }, 1000);
 </script>

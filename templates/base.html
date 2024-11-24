@@ -5,50 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astros BD {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body style="background-color: #e0ccb4; background-image: url('https://i.imgur.com/4m2fgqq.png'); background-repeat: no-repeat; background-attachment: fixed; background-position: center;">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <img src="https://i.imgur.com/4m2fgqq.png" alt="" width=75 height="75">
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/'%}active{%endif%}" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Auction</a>
-                </li>
-                {% if not request.user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link {% if request.path == '/login/'%}active{%endif%}" href="/login/">Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login/register_user/">Register</a>
-                </li>
-                {% endif %}
-                {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/login/logout_user/">Logout</a>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
-    
-    <div class="container">
-        {% block content %}
-        {% endblock %}
-    </div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Lunasima:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Lunasima:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lunasima:wght@400;700&display=swap" rel="stylesheet">
+    {% load static %}
     <style>
+
+        
+        body {
+            background-image: url("{% static 'bg_grad_2.png' %}");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+        }
         .navbar-nav .nav-link {
-            font-size: 1.25rem; /* Increase font size */
-            padding: 1rem; /* Increase padding for better vertical alignment */
+            font-size: 1.25vw; /* Increase font size */
+            padding: 1vw; /* Increase padding for better vertical alignment */
         }
         .navbar-nav {
             align-items: center; /* Center items vertically */
         }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .navbar-img{
+            width: 9vw;
+            height: 6vw;
+        }
+        .navbar-img2{
+            width: 3vw;
+            height: 3vw;
+        }
+        
+        
     </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #e0ccb4;">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <img src="{% static 'logo wo btrfly red.png'%}" alt="" class="navbar-img">
+            </ul>
+        </div>
+
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <img src="{% static 'Component 3 – 1.png'%}" alt="" class="navbar-img2">
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+        {% block content %}
+        {% endblock %}
+    <script>
+        var logo = document.getElementsByClassName('navbar-img')[0];
+        logo.addEventListener('click', function(){
+            window.location.href = "/";
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

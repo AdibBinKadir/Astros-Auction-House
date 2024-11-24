@@ -21,6 +21,8 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-    path('login/', include('django.contrib.auth.urls')),
-    path('login/', include('Authenticate.urls'))
+    path('login/', include('django.contrib.auth.urls'), name='login'),
+    path('login/', include('Authenticate.urls'), name='login'),
+    path('landing/', views.land, name='land'),
+    path('landing/<int:index>', views.landing, name='landing'),
 ]

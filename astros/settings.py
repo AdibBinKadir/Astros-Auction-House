@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,6 +31,12 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,7 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Authenticate.apps.AuthenticateConfig'
+    'Authenticate.apps.AuthenticateConfig',
+    'Products.apps.ProductsConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -52,12 +61,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'astros.urls'
 
-import os
+
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'Authenticate/auth_templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), 
+                 os.path.join(BASE_DIR, 'Authenticate/auth_templates'), 
+                 os.path.join(BASE_DIR, 'Products/prod_templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
