@@ -1,13 +1,53 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from .models import UserProfile
+from django.contrib import messages
+
+
+def register_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        password_confirm = request.POST.get('password-conf')
+        phone = request.POST.get('phone')
+        address = request.POST.get('address')
+        email = request.POST.get('email')
+        fullname = request.POST.get('fullname')
+
+        # Validate password confirmation
+        if password != password_confirm:
+            messages.error(request, 'Passwords do not match')
+            return render(request, 'register.html')
+
+        # Validate unique username
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username already exists')
+            return render(request, 'register.html')
+
+        # Create user and profile
+        try:
+            user = User.objects.create_user(username=username, email=email, password=password)
+            UserProfile.objects.create(user=user, phone=phone, address=address, fullname=fullname)
+            messages.success(request, 'User created successfully')
+            return redirect('/login/')
+        except Exception as e:
+            messages.error(request, f'Error creating user: {e}')
+   
+    return render(request, 'register.html')
 
 
 
 def login_user(request):
-    messages = []
-    user = None
+    user_agent = request.META.get('HTTP_USER_AGENT', '')
+    if 'Mobile' in user_agent:
+        template = 'mobile_login.html'
+    elif 'Tablet' in user_agent or 'iPad' in user_agent:
+        template = 'mobile_login.html'
+    else:
+        template = 'login.html'
+    print(template)
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -16,31 +56,25 @@ def login_user(request):
             login(request, user)
             return HttpResponseRedirect('/')
         else:
-            messages.append('Invalid credentials')
-            return render(request, 'login.html', {'messages': messages})
+            messages.error(request, 'Invalid credentials')
+            return render(request, template)
     else:
-        return render(request, 'login.html', {'messages': messages})
+        return render(request,  template)
+
     
 
 def logout_user(request):
-    logout(request)
-    return HttpResponseRedirect('/login/')
-
-
-def register_user(request):
-    messages = []
     if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        password_confirm = request.POST.get('password_conf')
-        if password == password_confirm:
-            user = User.objects.create_user(username, email, password)
-            user.save()
-            messages.append('User created successfully')
-        else:
-            messages.append('Passwords do not match')
+        logout(request)
+        return HttpResponseRedirect('/')
     else:
-        pass
-    return render(request, 'register.html', {'messages': messages})
+        user_agent = request.META.get('HTTP_USER_AGENT', '')
+        if 'Mobile' in user_agent:
+            template = 'mobile_logout.html'
+        elif 'Tablet' in user_agent or 'iPad' in user_agent:
+            template = 'mobile_logout.html'
+        else:
+            template = 'logout.html'
+        return render(request, template)
+
 

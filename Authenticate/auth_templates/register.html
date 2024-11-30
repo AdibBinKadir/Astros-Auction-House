@@ -1,46 +1,201 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Astros BD Register</title>
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+        }
 
-{% block title %}Log In{% endblock %}
+        .right-side {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #E1CFB9;
+            z-index: 1000; /* Ensure it displays over everything else */
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: flex-start;
+        }
 
-{% block content %}
+        .top-row {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: flex-start;
+            margin: auto;
+        }
 
-<div class="container mt-5" style="padding-top: 100px;">
-    {% for message in messages%}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{message}}
-      </div>
-    {% endfor %}
-    <form method="POST">
-        {% csrf_token %}
-        <div class="form-group row mb-4">
-            <label for="username" class="col-sm-2 col-form-label">Username:</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="username" name="username" required>
-            </div>
+        .bottom-row {
+            width: 80%;
+            max-width: 500px;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4.875rem;
+            background: #FFF2E2;
+            margin: auto;
+            flex-direction: column;
+            color: #C0A78F;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        #reroute {
+            width: 2.5rem;
+            height: 2.5rem;
+            margin-top: 1.5rem;
+            margin-left: 5rem;
+        }
+
+        #person-img {
+            width: 5rem;
+            height: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        .form-group label {
+            width: 30%; /* Adjust the width of the label */
+            font-size: 0.9rem;
+            color: #7A5C42;
+            margin-right: 1rem; /* Space between label and input */
+            text-align: right; /* Align text to the right for consistency */
+        }
+
+        .form-control {
+            width: 70%; /* Input width matches the remaining space */
+            padding: 0.5rem;
+            border: 1px solid #C0A78F;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background-color: #D5918A;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            width: 100%;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #C87F7A;
+        }
+
+        .register {
+            color: #D5918A;
+            text-decoration: none;
+        }
+
+        .register:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .right-side {
+                border-radius: 0; /* Remove border radius for small screens */
+                align-items: center;
+            }
+
+            .bottom-row {
+                width: 90%;
+                border-radius: 1rem;
+            }
+
+            #reroute {
+                margin-left: 1rem;
+                margin-top: 1rem;
+            }
+        }
+        .alert{
+            width: auto;
+            margin: auto;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    {% load static %}
+
+    <div class="right-side">
+        {% if messages%}
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }} 
+          </div>
+        {% endfor %}
+        {% endif %}
+        <div class="top-row">
+            <img src="{% static 'Component 3 – 1.png' %}" alt="Back" id="reroute">
         </div>
-        <div class="form-group row" style="margin-top: 50px;">
-            <label for="email" class="col-sm-2 col-form-label">Email:</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
+        <div class="bottom-row">
+            <img src="{% static 'acc-img.png' %}" alt="Account" id="person-img">
+            <form method="POST" class="w-75">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Instagram Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="password-conf">Confirm Password:</label>
+                    <input type="password" class="form-control" id="password-conf" name="password-conf" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="fullname">Full Name:</label>
+                    <input type="text" class="form-control" id="fullname" name="fullname" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" class="form-control" id="address" name="address" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Create an account</button>
+            </form>
+            <p>
+                Already have an account? <a class="register" href="/login">Log In</a>
+            </p>
         </div>
-        <div class="form-group row" style="margin-top: 50px;">
-            <label for="password" class="col-sm-2 col-form-label">Password:</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-        </div>
-        <div class="form-group row" style="margin-top: 50px;">
-            <label for="password_conf" class="col-sm-2 col-form-label">Confirm Password:</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="password_conf" name="password_conf" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-sm-10 offset-sm-2">
-                <button type="submit" class="btn btn-primary">Log In</button>
-            </div>
-        </div>
-    </form>
-</div>
-{% endblock %}
+    </div>
+</body>
+</html>

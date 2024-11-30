@@ -1,0 +1,312 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static%}
+<style>
+    /* General Styles */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #fbf0df; /* Background color from your original design */
+        overflow: hidden; /* Prevent extra scrolling */
+    }
+
+    .snap-container {
+        display: flex;
+        scroll-snap-type: x mandatory; /* Enable horizontal snap scrolling */
+        overflow-x: scroll;
+        scroll-behavior: smooth;
+        height: 100vh; /* Full viewport height */
+        width: 100vw; /* Full viewport width */
+    }
+
+    .page {
+        scroll-snap-align: start; /* Snap each page to the viewport */
+        flex: 0 0 100%; /* Full viewport width */
+        height: 100%; /* Full viewport height */
+        overflow-y: auto; /* Allow vertical scrolling within each page */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    /* Hide horizontal scrollbar */
+    .snap-container::-webkit-scrollbar {
+        display: none; /* For Chrome, Safari, Opera */
+    }
+    .snap-container {
+        scrollbar-width: none; /* For Firefox */
+        -ms-overflow-style: none; /* For IE and Edge */
+    }
+
+    /* Page 1 (Product Details) */
+    .column-1, .column-2, .column-3 {
+        margin-top: 15vw;
+    }
+    .column-1 {
+        background-color: #fbf0df;
+        color: #beb7ad;
+        padding: 1rem;
+    }
+    .column-1 .pdetails {
+        font-size: 6vw;
+        font-weight: 700;
+        margin: 1rem;
+    }
+    .column-1 .desc {
+        font-size: 4vw;
+        line-height: 1.6;
+        height: 40%;
+        align-items: center;
+        text-align: left;
+    }
+
+    /* Page 2 (Images) */
+    .column-2 {
+        background-color: #fff2e2;
+    }
+    .column-2 .header-2 {
+        font-size: 5vw;
+        color: white;
+        background-color: #d1756e;
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+    }
+    .column-2 .rectangle-b {
+        margin-top: 2vw;
+        width: 90%;
+        height: 40vh;
+        background: #d9d9d9;
+        border-radius: 1vw;
+        overflow: hidden;
+    }
+    .column-2 .prod-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Page 3 (Bidding) */
+    .tinos-regular {
+  font-family: "Tinos", serif;
+  font-style: normal;
+}
+    .column-3 {
+        background-color: #fbf0df;
+        color: #beb7ad;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .column-3 .pdetails {
+        font-size: 6vw;
+        font-weight: 700;
+        margin: 1rem;
+    }
+    .column-3 .highest-bid {
+        margin-top: 1vw;
+        width: 90%;
+        height: 5vh;
+        font-size: 30vw;
+        color: #b22222;
+        font-weight: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .column-3 .bids {
+        width: 100%;
+        margin-top: 10vh;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        height: 40%;
+    }
+    .column-3 .btn-primary {
+        background-color: #d1756e;
+        color: white;
+        width: 45%;
+        height: 10vh;
+        border: none;
+        border-radius: 1vw;
+        font-size: 4vw;
+    }
+    .column-3 .btn-primary:hover {
+        background-color: #C87F7A;
+    }
+    .underline{
+        width: 90%;
+        margin-top: 0;
+        margin-bottom: 10vw;
+        margin-left: auto;
+        margin-right: auto;
+        border: 0.1vw solid #e9d9c5;
+
+    }
+    .line-with-text {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    margin: auto;
+}
+.line-with-text::before,
+.line-with-text::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #ccc;
+}
+
+.line-with-text span {
+    padding: 0.15vw;
+    font-size: 5vw;
+    font-family: "Tinos", serif;
+    font-style: normal;
+    color: #beb7ad; /* Match the background color */
+}
+
+.ig-logo{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    color: #d1756e;
+    font-size: 3.7vw;
+    font-weight: 700;
+}
+.img{
+    width: 20vw; 
+    height: 100%; 
+    overflow: hidden; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+#logo-ig{
+    width: 25vw;
+    height: 25vw;
+    margin-bottom: 2vw;
+}
+.text{
+    font-size: 12.5vw;
+    align-items: center;
+    display: flex;
+    width: auto;
+    height: 100%;
+}
+#chb{
+    font-size: 3vw;
+}
+.latest-bids{
+    margin-top: 10vw;
+    margin-bottom: 2vw;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height: 20%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    font-size: 5vw;
+    font-weight: 500;
+    text-align: center;
+    position: relative;
+/* Assuming text is dark */
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    background-clip: border-box; /* Retain the fade within bounds */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.latest-bids::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+#lb{
+    margin-top: 10vw;
+}
+</style>
+
+<div class="snap-container" id="snap-container">
+    <!-- Page 1: Product Details -->
+    <div class="page column-1">
+        <p class="pdetails tinos-regular">Product Details</p>
+        <hr class="underline">
+        <div class="desc tinos-regular">
+            {{ desc }}
+        </div>
+        <div class="line-with-text">
+            <span> Dimensions </span>
+        </div>
+        <div class="desc tinos-regular">
+            {{ dimensions }}
+        </div>
+        <div class="line-with-text">
+            <span> Find them on </span>
+        </div>
+        <div class="ig-logo tinos-regular">
+            <div class="img">
+                <img src="{% static 'red ig logo.png' %}" alt="" id="logo-ig">
+            </div>
+            <div class="text">
+                <p id="ig-tag">@ello</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Page 2: Images -->
+    <div class="page column-2">
+        <div class="header-2 tinos-regular">
+            {{ brandname }}
+        </div>
+        {% for u in urls %}
+        <div class="rectangle-b">
+            <img src="{{ u }}" alt="Product Image" class="prod-img">
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Page 3: Bidding -->
+    <div class="page column-3">
+        <p class="pdetails tinos-regular">Biddings</p>
+        <hr class="underline">
+        <p id="chb" class="tinos-regular">Current Highest Bid:</p>
+        <div class="highest-bid tinos-regular">{{ highest }}</div>
+        <div class="latest-bids tinos-regular">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus repellendus doloremque, suscipit nulla quae debitis voluptatem exercitationem sed. Aspernatur accusantium ab dolor, et adipisci hic. Quod, rerum porro! Commodi, eveniet.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. A odio impedit molestiae quisquam libero porro eaque pariatur eum cupiditate! Sunt odio tempora maxime dolorum autem consectetur illum, dolore totam deleniti.
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem expedita veniam mollitia sit possimus praesentium eum nobis maiores, ab reprehenderit modi autem accusamus voluptatibus cupiditate illum vero suscipit unde earum!
+        </div>
+        <div class="line-with-text">
+            <span> Your Bids </span>
+        </div>
+        <div class="bids">
+            <button class="btn-primary">+ ৳50</button>
+            <button class="btn-primary">+ ৳100</button>
+            <button class="btn-primary">+ ৳150</button>
+            <button class="btn-primary">+ ৳200</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Scroll to the second page on load
+    window.onload = function () {
+        const snapContainer = document.getElementById('snap-container');
+        snapContainer.scrollLeft = window.innerWidth; // Move horizontally to Page 2
+    };
+</script>
+{% endblock %}

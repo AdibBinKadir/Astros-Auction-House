@@ -15,13 +15,12 @@ body {
     padding: 0;
     width: 100vw;
     height: 100vh;
-    overflow-x: hidden;
 }
     .row-1 {
             display: flex;
             justify-content: center;
             flex-direction: row;
-            margin-top: 10vw;
+            margin-top: 20vw;
         }
     .row-1 > div {
         display: flex;
@@ -71,6 +70,7 @@ body {
     justify-self: center;
     margin: auto;
     border: calc(2.5 * var(--rpx)) solid #e1cfb9;
+    padding-bottom: 5vw;
 }
 .flex-row {
   display: flex;
@@ -385,9 +385,7 @@ body {
         #load-img{
             animation: oscillateOpacity 1s infinite;
         }
-        /* #main{
-            display: none;
-        } */
+
         @keyframes oscillateOpacity {
         0%, 100% {
             opacity: 1;
@@ -400,11 +398,9 @@ body {
         width: 100%;
         height: 100%;
     }
+
 </style>
-<!-- <div class="loader" id="loading">
-  <img src="{% static 'landing_page_anim_-2-removebg-preview.png' %}" alt="" id="load-img">
-      
-  </div> -->
+
 <div id="main">
   <div class="row-1" onclick="redirect()">
     <div class="timer">
@@ -444,7 +440,7 @@ body {
           <div class="product-name">{{productname}}</div>
           <div class="starting-price">Starting price: {{startingprice}}/=</div>
           <div class="auction-time">Auction starts on {{month}} {{day}}</div>
-          <button class="rectangle-c" onclick="giveAlert()">
+          <button class="rectangle-c" onclick="showProd()">
             <div class="view-product">View Product</div>
           </button>
         </div>
@@ -472,6 +468,11 @@ body {
 //     setTimeout(load, 500);
 // };
 
+function showProd(){
+  var index = {{index}};
+    window.location.href = "/products/" + String(index);
+}
+
 var timer = document.getElementsByClassName("row-1")[0];
 timer.addEventListener('click', redirect);
 
@@ -480,6 +481,7 @@ right.onclick = function() {
     var index = {{index}}+1;
     window.location.href = "/landing/"+String(index);
 };
+
 
 var left = document.getElementById("left");
 left.onclick = function() {

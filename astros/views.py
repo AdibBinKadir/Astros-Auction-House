@@ -9,6 +9,7 @@ month = dtime.strftime('%B')
 day = dtime.strftime('%d')
 
 
+
 def home(request):
     return render(request, 'index.html', context={'date': date})  
 

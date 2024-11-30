@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.wrapper{
+    margin-top: 10vw;
+    width: 90%;
+    height: 85vh;
+    margin-left: auto; /* Separate margin properties */
+    margin-right: auto; /* Separate margin properties */
+    display: flex;
+    background-color: #fbf0df;
+    flex-direction: row;
+    border-radius: 1vw;
+    border: #e9d9c5 0.2vw solid;
+    justify-content: space-between;
+    color: #beb7ad;
+}
+.column-1, .column-2, .column-3{
+    height: 100%;
+    width: 33.33%;
+    border: #e9d9c5 0.2vw solid;
+
+}
+.column-2{
+    overflow-y: scroll;
+}
+
+.column-2::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.column-2 {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.pdetails{
+    font-size: 2vw;
+    font-weight: 700;
+    margin: 0.5vw;
+    text-align: center;
+
+}
+
+.desc{
+    margin: 0.5vw;
+    height: 60%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.desc::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.desc {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.pdesc{
+    font-size: 1.9vw;
+    font-weight: 500;
+    text-align: left;
+}
+.tinos-regular {
+  font-family: "Tinos", serif;
+  font-style: normal;
+}
+
+#pdunderline{
+    width: 80%;
+    margin: auto;
+    border: 0.1vw solid #e9d9c5;
+}
+.line-with-text {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    margin: auto;
+}
+
+.line-with-text::before,
+.line-with-text::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #ccc;
+}
+
+.line-with-text span {
+    padding: 0.15vw;
+    font-size: 1.2vw;
+    font-family: "Tinos", serif;
+    font-style: normal;
+    color: #beb7ad; /* Match the background color */
+}
+.ig-logo{
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    color: #d1756e;
+    font-size: 3.7vw;
+    font-weight: 700;
+}
+
+.img{
+    width: 5vw; 
+    height: 100%; 
+    overflow: hidden; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+#logo-ig{
+    width: 7.5vw;
+    height: 7.5vw;
+}
+.text{
+    align-items: center;
+    display: flex;
+    width: auto;
+    height: 100%;
+}
+#ig-tag{
+    height: 5vw;
+}
+.header-2{
+    width: 100%;
+    height: 10%;
+    background-color: #d1756e;
+    font-size: 2vw;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.rectangle-b{
+    margin-top: 2vw;
+    width: 60%;
+    height: 20vw;
+    background: #d9d9d9;
+    border: 2vw solid #d9d9d9;
+    border-radius: 1vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#chb{
+    font-size: 1vw;
+    margin-top: 1vw;
+    margin-left: 1vw;
+}
+
+.highest-bid{
+    width: 90%;
+    height: 15%;
+    font-size: 10vw;
+    color: #b22222;
+    font-weight: 1000;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#highest-bid-num{
+    font-size: 7.5vw;
+    font-weight: 700;
+    color: #b22222;
+}
+.latest-bids{
+    margin-top: 2vw;
+    margin-bottom: 5vw;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    height: 20%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    font-size: 1.5vw;
+    font-weight: 500;
+    text-align: center;
+    position: relative;
+/* Assuming text is dark */
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    background-clip: border-box; /* Retain the fade within bounds */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.latest-bids::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+.bids{
+    width: 90%;
+    margin: auto;
+    height: 27%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    font-size: 2vw;
+
+}
+.row{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+.btn-primary{
+    background-color: #d1756e;
+    color: white;
+    width: 48%;
+    height: 60%;
+    border: none;
+    border-radius: 1vw;
+}
+.btn-primary:hover{
+            background-color: #C87F7A;
+        }
+
+.prod-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1vw;
+}
+</style>
+{% load static%}
+<div class="wrapper">
+    <div class="column-1">
+        <p class="pdetails tinos-regular">Product Details</p>
+        <hr id="pdunderline">
+        <div class="desc">
+            <p class="pdesc tinos-regular">{{desc}}</p>
+        </div>
+        <div class="line-with-text">
+            <span> Find them on </span>
+        </div>
+        <div class="ig-logo tinos-regular">
+            <div class="img">
+                <img src="{% static 'red ig logo.png' %}" alt="" id="logo-ig">
+            </div>
+            <div class="text">
+                <p id="ig-tag">@astrosbd</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="column-2">
+        <div class="header-2 tinos-regular">
+            {{brandname}}
+        </div>
+        {% for u in urls%}
+        <div class="rectangle-b">
+            <img src="{{u}}" alt="" class="prod-img">
+          </div>
+          {% endfor %}
+    </div>
+    <div class="column-3">
+        <p class="pdetails tinos-regular">Biddings</p>
+        <hr id="pdunderline">
+        <p id="chb" class="tinos-regular">Current Highest Bid:</p>
+        <div class="highest-bid">
+            <p id="highest-bid-num" class="tinos-regular">{{highest}}</p>
+        </div>
+        <div class="latest-bids">
+            {{desc}}
+        </div>
+        <div class="line-with-text">
+            <span> Your Bids </span>
+        </div>
+        <div class="bids">
+            <div class="row">
+                <button class="btn-primary">+ ৳50</button>
+                <button class="btn-primary">+ ৳100</button>
+            </div>
+            <div class="row">
+                <button class="btn-primary">+ ৳150</button>
+                <button class="btn-primary">+ ৳200</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

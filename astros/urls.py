@@ -25,4 +25,5 @@ urlpatterns = [
     path('login/', include('Authenticate.urls'), name='login'),
     path('landing/', views.land, name='land'),
     path('landing/<int:index>', views.landing, name='landing'),
+    path('products/', include('Products.urls'), name='products'),
 ]

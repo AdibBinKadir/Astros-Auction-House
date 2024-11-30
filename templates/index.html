@@ -15,7 +15,7 @@
         .row-2{
             display: flex;
             justify-content: flex-end;
-            margin-top: 10vw;
+            margin-top: 25vw;
             flex-direction: row;
             font-family: "Encode Sans Semi Condensed", sans-serif;
             font-weight: 500;
@@ -103,6 +103,7 @@
         color: #a82424;
     }
 }
+
     </style>
     {% load static %}
     <div class="loader" id="loading">
@@ -110,6 +111,7 @@
         
     </div>
     <div id="main">
+
     <div class="row-2">next drop in:</div>
     <div class="row-1">
         <div id="clock"><img src="{% static 'Mask Group 1.png'%}" alt="" id="clock-img"></div>
@@ -147,6 +149,7 @@ window.onload = function() {
 
 var maindiv = document.getElementById("main");
 window.addEventListener('scroll', redirect);
+maindiv.addEventListener('click', redirect);
 function redirect(){
     window.location.href = "landing/";
 }
