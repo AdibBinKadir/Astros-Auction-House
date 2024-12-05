@@ -4,8 +4,9 @@
 <style>
 .wrapper{
     margin-top: 10vw;
+    margin-bottom: 10vw;
     width: 90%;
-    height: 85vh;
+    height: 100vh;
     margin-left: auto; /* Separate margin properties */
     margin-right: auto; /* Separate margin properties */
     display: flex;
@@ -21,6 +22,9 @@
     width: 33.33%;
     border: #e9d9c5 0.2vw solid;
 
+}
+.column-1{
+    position: relative;
 }
 .column-2{
     overflow-y: scroll;
@@ -160,29 +164,27 @@
     margin-left: 1vw;
 }
 
+
 .highest-bid{
-    width: 90%;
-    height: 15%;
-    font-size: 10vw;
-    color: #b22222;
-    font-weight: 1000;
+    height: auto;
+    width: auto;
     margin: auto;
-    display: flex;
+    position: relative;
     justify-content: center;
-    align-items: center;
 }
 
 #highest-bid-num{
     font-size: 7.5vw;
     font-weight: 700;
     color: #b22222;
+    text-align: center;
 }
 .latest-bids{
     margin-top: 2vw;
     margin-bottom: 5vw;
     margin-left: auto;
     margin-right: auto;
-    width: 60%;
+    width: auto;
     height: 20%;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -243,13 +245,64 @@
     object-fit: cover;
     border-radius: 1vw;
 }
+
+.alert-primary{
+    width: 100%;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    text-align: center;
+}
+.black-rectangle {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 70%;
+        background-color: black;
+        opacity: 0; /* Adjust opacity as needed */
+        z-index: 1;
+        border-radius: 0px 4vw 4vw 0px;
+    }
+
+.black-rectangle:hover {
+    opacity: 0.5; /* Adjust opacity as needed */
+}
+
+
+.black-rectangle2{
+    height: 100%;
+    border-radius: 4vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: black;
+    opacity: 0; /* Adjust opacity as needed */
+    z-index: 1;
+    
+}
+.black-rectangle2:hover {
+    opacity: 0.5; /* Adjust opacity as needed */
+}
+#time{
+    background-color: #3189e0;
+}
+
+#check-email{
+    background-color: #32a852;
+}
+
+#cooldown{
+    background-color: #e0b432;
+}
 </style>
 {% load static%}
 <div class="wrapper">
     <div class="column-1">
+        <div class="black-rectangle" onclick="left()"></div>
         <p class="pdetails tinos-regular">Product Details</p>
         <hr id="pdunderline">
-        <div class="desc">
+                <div class="desc">
             <p class="pdesc tinos-regular">{{desc}}</p>
         </div>
         <div class="line-with-text">
@@ -260,44 +313,137 @@
                 <img src="{% static 'red ig logo.png' %}" alt="" id="logo-ig">
             </div>
             <div class="text">
-                <p id="ig-tag">@astrosbd</p>
+                <p id="ig-tag">@{{brand_username}}</p>
             </div>
+        </div>
+        </div>
+        <div class="column-2">
+            <div class="header-2 tinos-regular">
+                {{brandname}}
+            </div>
+            <div class="header-2 tinos-regular" id="time">
+                {% if auctionable == 1%}
+                <p id="countdown"></p>
+                {% elif auctionable == 0 %}
+                {% if user.is_authenticated %}
+                {% if verified %}
+                Auction is yet to start
+                {%else%}
+                Verify your email to bid
+                {% endif %}
+                {%else%}
+                Log In to Bid
+                {% endif %}
+                {% else %}
+                Winner: {{winner}}
+                {% endif %}
+            </div>
+            {% if auctionable == -1 %}
+            <div class="header-2 tinos-regular" id="check-email">
+                Check your email!
+            </div>
+            {% endif %}
+            {% if remaining > 0 %}
+            <div class="header-2 tinos-regular" id="cooldown">
+                Bid again in {{remaining}} seconds
+            </div>
+            {% endif %}
+            {% for u in urls %}
+            <div class="rectangle-b">
+                <img src="{{u}}" alt="" class="prod-img">
+            </div>
+            {% endfor %}
+        </div>
+        <div class="column-3">
+            <p class="pdetails tinos-regular">Biddings</p>
+            <hr id="pdunderline">
+            <p id="chb" class="tinos-regular">Current Highest Bid:</p>
+            <div class="highest-bid">
+                <div class="black-rectangle2" onclick="right()"></div>
+                <p id="highest-bid-num" class="tinos-regular">{{highest}}</p>
+            </div>
+            <div class="latest-bids" id="bids">
+                
+            </div>
+            <div class="line-with-text">
+                <span> Your Bids </span>
+            </div>
+            <div class="bids">
+                <div class="row">
+                    <button class="btn-primary" id="ponchash" onclick="bid(50, {{index}})">+ ৳50</button>
+                    <button class="btn-primary" id="eksho" onclick="bid(100, {{index}})">+ ৳100</button>
+                </div>
+                <div class="row">
+                    <button class="btn-primary" id="dersho" onclick="bid(150, {{index}})">+ ৳150</button>
+                    <button class="btn-primary" id="duisho" onclick="bid(200, {{index}})">+ ৳200</button>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        
+        <script>
+            function left(){
+                var ind = {{index}};
+                console.log("left function called with index:", ind);
+                window.location.href = "/products/left/"+String(ind);
+            }
+        
+            function right(){
+                console.log("right function called");
+                var ind = {{index}};
+                window.location.href = "/products/right/"+String(ind);
+            }
+            function fetchBids() {
+            const productId = {{ index }};
+            fetch(`/products/get_bids/${productId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    const bidsContainer = document.getElementById('bids');
+                    bidsContainer.innerHTML = ''; // Clear existing bids
+                    data.forEach(bid => {
+                        const bidElement = document.createElement('div');
+                        bidElement.className = 'bid';
+                        bidElement.innerHTML = `<p>${bid.user__fullname} bid ${bid.bid_amount}</p>`;
+                        bidsContainer.appendChild(bidElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching bids:', error));
+        }
 
-        </div>
-    </div>
-    <div class="column-2">
-        <div class="header-2 tinos-regular">
-            {{brandname}}
-        </div>
-        {% for u in urls%}
-        <div class="rectangle-b">
-            <img src="{{u}}" alt="" class="prod-img">
-          </div>
-          {% endfor %}
-    </div>
-    <div class="column-3">
-        <p class="pdetails tinos-regular">Biddings</p>
-        <hr id="pdunderline">
-        <p id="chb" class="tinos-regular">Current Highest Bid:</p>
-        <div class="highest-bid">
-            <p id="highest-bid-num" class="tinos-regular">{{highest}}</p>
-        </div>
-        <div class="latest-bids">
-            {{desc}}
-        </div>
-        <div class="line-with-text">
-            <span> Your Bids </span>
-        </div>
-        <div class="bids">
-            <div class="row">
-                <button class="btn-primary">+ ৳50</button>
-                <button class="btn-primary">+ ৳100</button>
-            </div>
-            <div class="row">
-                <button class="btn-primary">+ ৳150</button>
-                <button class="btn-primary">+ ৳200</button>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
+        // Fetch bids every 5 seconds
+        setInterval(fetchBids, 5000);
+
+        // Initial fetch
+        fetchBids();
+        </script>
+    
+        {% if auctionable == 1%}
+        <script>
+            function bid(amount, ind){
+                window.location.href = "/products/bid/"+String(ind)+"/"+String(amount);
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+        setInterval(function() {
+            const endDateString = "{{ end_date }}"; 
+            const DateTime = luxon.DateTime;
+
+            // Create a DateTime object in the Asia/Dhaka timezone
+            const endDate = DateTime.fromFormat(endDateString, "MMM dd, yyyy HH:mm:ss", { zone: "Asia/Dhaka" });
+
+            // Update the text in the <p> element with id="countdown"
+            let timeDiff = endDate.diffNow();
+            if (timeDiff <= 0) {
+            location.reload(); // Refresh the page if timeDiff is 0 or less
+            } else {
+            let time = timeDiff.toFormat('mm:ss');
+            document.getElementById('countdown').innerHTML = 'Bidding ends in: ' + time;
+            }
+        }, 1000);
+    });
+    </script>
+
+        {% endif %}
+
+        
+        {% endblock %}

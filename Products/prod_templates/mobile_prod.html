@@ -135,8 +135,9 @@
         border-radius: 1vw;
         font-size: 4vw;
     }
-    .column-3 .btn-primary:hover {
-        background-color: #C87F7A;
+    .column-3 .btn-primary:hover, .column-3 .btn-primary:active, .column-3 .btn-primary:focus {
+        background-color: #c87f7a;
+        outline: none; /* Remove default focus outline */
     }
     .underline{
         width: 90%;
@@ -237,6 +238,16 @@
 #lb{
     margin-top: 10vw;
 }
+#time{
+    background-color: #3189e0;
+}
+#check-email{
+    background-color: #32a852;
+}
+
+#cooldown{
+    background-color: #e0b432;
+}
 </style>
 
 <div class="snap-container" id="snap-container">
@@ -261,7 +272,7 @@
                 <img src="{% static 'red ig logo.png' %}" alt="" id="logo-ig">
             </div>
             <div class="text">
-                <p id="ig-tag">@ello</p>
+                <p id="ig-tag">@{{brand_username}}</p>
             </div>
 
         </div>
@@ -272,6 +283,33 @@
         <div class="header-2 tinos-regular">
             {{ brandname }}
         </div>
+        <div class="header-2 tinos-regular" id="time">
+            {% if auctionable == 1%}
+            <p id="countdown"></p>
+            {% elif auctionable == 0 %}
+            {% if user.is_authenticated %}
+            {% if verified %}
+            Auction is yet to start
+            {%else%}
+            Verify your email to bid
+            {% endif %}
+            {%else%}
+            Log In to Bid
+            {% endif %}
+            {% else %}
+            Winner: {{winner}}
+            {% endif %}
+        </div>
+        {% if auctionable == -1 %}
+        <div class="header-2 tinos-regular" id="check-email">
+            Check your email!
+        </div>
+        {% endif %}
+        {% if remaining > 0 %}
+        <div class="header-2 tinos-regular" id="cooldown">
+            Bid again in {{remaining}} seconds
+        </div>
+        {% endif %}
         {% for u in urls %}
         <div class="rectangle-b">
             <img src="{{ u }}" alt="Product Image" class="prod-img">
@@ -285,19 +323,17 @@
         <hr class="underline">
         <p id="chb" class="tinos-regular">Current Highest Bid:</p>
         <div class="highest-bid tinos-regular">{{ highest }}</div>
-        <div class="latest-bids tinos-regular">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus repellendus doloremque, suscipit nulla quae debitis voluptatem exercitationem sed. Aspernatur accusantium ab dolor, et adipisci hic. Quod, rerum porro! Commodi, eveniet.
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. A odio impedit molestiae quisquam libero porro eaque pariatur eum cupiditate! Sunt odio tempora maxime dolorum autem consectetur illum, dolore totam deleniti.
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem expedita veniam mollitia sit possimus praesentium eum nobis maiores, ab reprehenderit modi autem accusamus voluptatibus cupiditate illum vero suscipit unde earum!
+        <div class="latest-bids tinos-regular" id="bids">
+
         </div>
         <div class="line-with-text">
             <span> Your Bids </span>
         </div>
         <div class="bids">
-            <button class="btn-primary">+ ৳50</button>
-            <button class="btn-primary">+ ৳100</button>
-            <button class="btn-primary">+ ৳150</button>
-            <button class="btn-primary">+ ৳200</button>
+            <button class="btn-primary" id="ponchash" onclick="bid(50)">+ ৳50</button>
+            <button class="btn-primary" id="eksho" onclick="bid(100)">+ ৳100</button>
+            <button class="btn-primary" id="dersho" onclick="bid(150)">+ ৳150</button>
+            <button class="btn-primary" id="duisho" onclick="bid(200)">+ ৳200</button>
         </div>
     </div>
 </div>
@@ -306,7 +342,59 @@
     // Scroll to the second page on load
     window.onload = function () {
         const snapContainer = document.getElementById('snap-container');
-        snapContainer.scrollLeft = window.innerWidth; // Move horizontally to Page 2
+        snapContainer.scrollLeft = (window.innerWidth)*{{scr}}; // Move horizontally to Page 2
     };
+    function fetchBids(){
+        const productId = {{ index }};
+        fetch(`/products/get_bids/${productId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    const bidsContainer = document.getElementById('bids');
+                    bidsContainer.innerHTML = ''; // Clear existing bids
+                    data.forEach(bid => {
+                        const bidElement = document.createElement('div');
+                        bidElement.className = 'bid';
+                        bidElement.innerHTML = `<p>${bid.user__fullname} bid ${bid.bid_amount}</p>`;
+                        bidsContainer.appendChild(bidElement);
+                    });
+                })
+                .catch(error => console.error('Error fetching bids:', error));
+            }
+        // Fetch bids every 5 seconds
+        setInterval(fetchBids, 5000);
+
+        // Initial fetch
+        fetchBids();
 </script>
+
+{% if auctionable == 1 %}
+<script>
+    var ind = {{index}};
+    function bid(amount){
+        window.location.href = "/products/bid/"+String(ind)+"/"+String(amount);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        setInterval(function() {
+            const endDateString = "{{ end_date }}"; 
+            const DateTime = luxon.DateTime;
+
+            // Create a DateTime object in the Asia/Dhaka timezone
+            const endDate = DateTime.fromFormat(endDateString, "MMM dd, yyyy HH:mm:ss", { zone: "Asia/Dhaka" });
+
+            // Update the text in the <p> element with id="countdown"
+            let timeDiff = endDate.diffNow();
+            if (timeDiff <= 0) {
+            location.reload(); // Refresh the page if timeDiff is 0 or less
+            } else {
+            let time = timeDiff.toFormat('mm:ss');
+            document.getElementById('countdown').innerHTML = 'Bidding ends in: ' + time;
+            }
+        }, 1000);
+    });
+
+
+    
+</script>
+
+{% endif %}
 {% endblock %}

@@ -32,7 +32,7 @@
             padding-bottom: 2vw;
         }
         #logo-img{
-            width: 10vw;
+            width: 15vw;
             height: 7vw;
         }
             .right-side {
@@ -98,13 +98,19 @@
         width: auto;
         margin: auto;
     }
+    .forgot-password{
+        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+    }
+    
         </style>
     </head>
     {% load static%}
     <body>
         <div class="nav-over">
             <div class="logo">
-                <img src="{% static 'logo wo btrfly red.png' %}" alt="logo" id="logo-img">
+                <img src="{% static 'red logo.png' %}" alt="logo" id="logo-img">
             </div>
         </div>
                         <div class="right-side">
@@ -131,6 +137,9 @@
     <div class="form-group">
         <label for="password">Password:</label>
         <input type="password" class="form-control" id="password" name="password" required>
+        <div class="forgot-password">
+        <p class="mt-3"> <a href="/login/forgot_password" class="register">Forgot Password?</a>
+        </div>
     </div>
     <button type="submit" class="btn btn-primary btn-block">Log In</button>
 </form>

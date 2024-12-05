@@ -2,11 +2,29 @@ from django.shortcuts import render
 import datetime
 from Products.models import Product
 from django.http import HttpResponseRedirect
+from Products.models import Product
+import pytz
 
-date = "Dec 31, 2024 16:17:00"
-dtime = datetime.datetime.strptime(date, '%b %d, %Y %H:%M:%S')
-month = dtime.strftime('%B')
-day = dtime.strftime('%d')
+
+products = Product.objects.all()
+if products.exists():
+    earliest_product = products.order_by('startdt').first()
+    latest_product = products.order_by('startdt').last()
+    dtime_naive = earliest_product.startdt
+    server_timezone = pytz.timezone('Asia/Dhaka')  # Replace with your server's timezone
+    dtime = dtime_naive.astimezone(server_timezone)
+    date = dtime.strftime('%b %d, %Y %H:%M:%S')
+    month = dtime.strftime('%B')
+    day = dtime.strftime('%d')
+    end_date_naive = latest_product.startdt + datetime.timedelta(minutes=30)
+    end_date = end_date_naive.astimezone(server_timezone)
+
+else:
+    date = "Nov 30, 2024 22:56:00"
+    dtime = datetime.datetime.strptime(date, '%b %d, %Y %H:%M:%S')
+    month = dtime.strftime('%B')
+    day = dtime.strftime('%d')
+    end_date = "Nov 30, 2024 23:26:00"
 
 
 

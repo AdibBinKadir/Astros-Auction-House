@@ -7,8 +7,8 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=15, blank=True)
     address = models.TextField(blank=True)
     fullname = models.CharField(max_length=100, blank=True)
-    highestbid = models.IntegerField(default=0)
-    cooldown = models.IntegerField(default=0)
+    cooldown = models.IntegerField(default=3)
+    verified = models.BooleanField(default=False)
 
 
     def __str__(self):
