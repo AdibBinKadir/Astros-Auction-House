@@ -76,10 +76,7 @@
     font-weight: 500;
     text-align: left;
 }
-.tinos-regular {
-  font-family: "Tinos", serif;
-  font-style: normal;
-}
+
 
 #pdunderline{
     width: 80%;
@@ -106,8 +103,6 @@
 .line-with-text span {
     padding: 0.15vw;
     font-size: 1.2vw;
-    font-family: "Tinos", serif;
-    font-style: normal;
     color: #beb7ad; /* Match the background color */
 }
 .ig-logo{
@@ -146,7 +141,7 @@
 .header-2{
     width: 100%;
     height: 10%;
-    background-color: #d1756e;
+    background-color: #b22222;
     font-size: 2vw;
     font-weight: 700;
     color: white;
@@ -174,21 +169,21 @@
 
 <div class="wrapper">
     <div class="column-1">
-        <p class="pdetails tinos-regular">Product Details</p>
+        <p class="pdetails ">Product Details</p>
         <hr id="pdunderline">
         <div class="desc">
-            <p class="pdesc tinos-regular">{{desc}}</p>
+            <p class="pdesc ">{{desc}}</p>
         </div>
         <div class="line-with-text">
             <span> Dimensions </span>
         </div>
         <div class="dimensions">
-            <p class="pdesc tinos-regular">{{dimensions}}</p>
+            <p class="pdesc ">{{dimensions}}</p>
         </div>
         <div class="line-with-text">
             <span> Find them on </span>
         </div>
-        <div class="ig-logo tinos-regular">
+        <div class="ig-logo ">
             <div class="img">
                 <img src="{% static 'red ig logo.png' %}" alt="" id="logo-ig">
             </div>
@@ -199,7 +194,7 @@
         </div>
     </div>
     <div class="column-2"  onclick="center()">
-        <div class="header-2 tinos-regular">
+        <div class="header-2 ">
             {{brandname}}
         </div>
         {% for u in urls %}

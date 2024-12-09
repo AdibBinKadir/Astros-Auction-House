@@ -41,12 +41,6 @@
 }
 
 
-
-.tinos-regular {
-  font-family: "Tinos", serif;
-  font-style: normal;
-}
-
 .line-with-text {
     display: flex;
     align-items: center;
@@ -75,8 +69,6 @@
 .line-with-text span {
     padding: 0.15vw;
     font-size: 1.2vw;
-    font-family: "Tinos", serif;
-    font-style: normal;
     color: #beb7ad; /* Match the background color */
 }
 
@@ -84,7 +76,7 @@
 .header-2{
     width: 100%;
     height: 10%;
-    background-color: #d1756e;
+    background-color: #b22222;
     font-size: 2vw;
     font-weight: 700;
     color: white;
@@ -205,23 +197,25 @@
     justify-content: space-between;
 }
 #time{
-    background-color: #3189e0;
+    background-color: #b22222;
+    border: 0.15vw solid black;
 }
+
 #check-email{
-    background-color: #32a852;
+    background-color: #b22222;
 }
 
 #cooldown{
-    background-color: #e0b432;
+    background-color: #b22222;
 }
 </style>
 
 <div class="wrapper">
     <div class="column-2" onclick="center()">
-        <div class="header-2 tinos-regular">
+        <div class="header-2 ">
             {{brandname}}
         </div>
-        <div class="header-2 tinos-regular" id="time">
+        <div class="header-2 " id="time">
             {% if auctionable == 1%}
             <p id="countdown"></p>
             {% elif auctionable == 0 %}
@@ -238,13 +232,13 @@
             Winner: {{winner}}
             {% endif %}
         </div>
-        {% if auctionable == -1 %}
-        <div class="header-2 tinos-regular" id="check-email">
+        {% if auctionable == -1 and W %}
+        <div class="header-2 " id="check-email">
             Check your email!
         </div>
         {% endif %}
         {% if remaining > 0 %}
-        <div class="header-2 tinos-regular" id="cooldown">
+        <div class="header-2 " id="cooldown">
             Bid again in {{remaining}} seconds
         </div>
         {% endif %}
@@ -255,11 +249,11 @@
           {% endfor %}
     </div>
     <div class="column-3">
-        <p class="pdetails tinos-regular">Biddings</p>
+        <p class="pdetails ">Biddings</p>
         <hr id="pdunderline">
-        <p id="chb" class="tinos-regular">Current Highest Bid:</p>
+        <p id="chb" class="">Current Highest Bid:</p>
         <div class="highest-bid">
-            <p id="highest-bid-num" class="tinos-regular">{{highest}}</p>
+            <p id="highest-bid-num" class="">{{highest}}</p>
         </div>
         <div class="bid-row">
             <div class="latest-bids" id="bids">

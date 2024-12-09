@@ -14,7 +14,7 @@ from django.conf import settings
 
 def send_verification_email(request, user):
     current_site = get_current_site(request)
-    mail_subject = 'Activate your account.'
+    mail_subject = 'Verify your account.'
     message = render_to_string('acc_active_email.html', {
         'user': user,
         'domain': current_site.domain,
@@ -59,6 +59,7 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user)
         user_profile.verified = True
+        user_profile.save()
         return HttpResponseRedirect('/')
     else:
         return HttpResponse('Reset link is invalid!')

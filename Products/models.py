@@ -4,6 +4,16 @@ import datetime
 # Create your models here.
 
 class Product(models.Model):
+    id = models.AutoField(primary_key=True)
+
+    def save(self, *args, **kwargs):
+        if not Product.objects.exists():
+            self.id = 1
+        else:
+            max_id = Product.objects.aggregate(models.Max('id'))['id__max']
+            self.id = max_id + 1 if max_id else 1
+        super().save(*args, **kwargs)
+    
     product_name = models.CharField(max_length=255)
     brand_name = models.CharField(max_length=255)
     starting_price = models.IntegerField()
@@ -27,7 +37,7 @@ class Product(models.Model):
     
 
 class Bid(models.Model):
-    user = models.ForeignKey('Authenticate.UserProfile', on_delete=models.CASCADE)
+    user = models.ForeignKey('Authenticate.UserProfile', on_delete=models.CASCADE, db_column="user_id")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     bid_amount = models.IntegerField()
     bid_time = models.DateTimeField(default=datetime.datetime.now)

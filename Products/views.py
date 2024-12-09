@@ -56,8 +56,17 @@ def products(request, index, scr):
     curr_date = datetime.datetime.now(datetime.timezone.utc)
     currdt_aware = curr_date.astimezone(server_timezone)
 
-    user = UserProfile.objects.get(user=request.user)
-    verified = user.verified
+    if request.user.is_authenticated:
+        user = UserProfile.objects.get(user=request.user)
+        verified = user.verified
+        if products[index].winner == user:
+            W = True
+        else:
+            W = False
+    else:
+        user = None
+        verified = False
+        W = False
 
 
     if (request.user.is_authenticated) and (enddt_aware > currdt_aware > startdt_aware) and (verified):
@@ -90,6 +99,7 @@ def products(request, index, scr):
         'remaining': remaining,
         'brand_username': brand_username,
         'verified': verified,
+        'W': W,
 
     }
 
@@ -156,8 +166,17 @@ def right_prod(request, index):
     curr_date = datetime.datetime.now(datetime.timezone.utc)
     currdt_aware = curr_date.astimezone(server_timezone)
 
-    user = UserProfile.objects.get(user=request.user)
-    verified = user.verified
+    if request.user.is_authenticated:
+        user = UserProfile.objects.get(user=request.user)
+        verified = user.verified
+        if products[index].winner == user:
+            W = True
+        else:
+            W = False
+    else:
+        user = None
+        verified = False
+        W = False
     if (request.user.is_authenticated) and (enddt_aware > currdt_aware > startdt_aware) and (verified):
         auctionable = 1
     elif (enddt_aware < currdt_aware):
@@ -182,6 +201,7 @@ def right_prod(request, index):
         'winner': winner_name,
         'remaining': remaining,
         'verified': verified,
+        'W': W,
     }
 
 

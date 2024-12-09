@@ -30,6 +30,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
+        overflow-y: auto;
     }
 
     /* Hide horizontal scrollbar */
@@ -49,6 +50,7 @@
         background-color: #fbf0df;
         color: #beb7ad;
         padding: 1rem;
+        height: 100vh;
     }
     .column-1 .pdetails {
         font-size: 6vw;
@@ -66,11 +68,13 @@
     /* Page 2 (Images) */
     .column-2 {
         background-color: #fff2e2;
+        height: 200vh;
+        overflow-y: scroll;
     }
     .column-2 .header-2 {
         font-size: 5vw;
         color: white;
-        background-color: #d1756e;
+        background-color: #b22222;
         width: 100%;
         text-align: center;
         padding: 1rem;
@@ -90,10 +94,6 @@
     }
 
     /* Page 3 (Bidding) */
-    .tinos-regular {
-  font-family: "Tinos", serif;
-  font-style: normal;
-}
     .column-3 {
         background-color: #fbf0df;
         color: #beb7ad;
@@ -101,6 +101,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+        height: 100vh;
     }
     .column-3 .pdetails {
         font-size: 6vw;
@@ -167,8 +168,6 @@
 .line-with-text span {
     padding: 0.15vw;
     font-size: 5vw;
-    font-family: "Tinos", serif;
-    font-style: normal;
     color: #beb7ad; /* Match the background color */
 }
 
@@ -239,40 +238,42 @@
     margin-top: 10vw;
 }
 #time{
-    background-color: #3189e0;
+    background-color: #b22222;
+    border: 0.15vw solid black;
 }
+
 #check-email{
-    background-color: #32a852;
+    background-color: #b22222;
 }
 
 #cooldown{
-    background-color: #e0b432;
+    background-color: #b22222;
 }
 </style>
 
 <div class="snap-container" id="snap-container">
     <!-- Page 1: Product Details -->
     <div class="page column-1">
-        <p class="pdetails tinos-regular">Product Details</p>
+        <p class="pdetails ">Product Details</p>
         <hr class="underline">
-        <div class="desc tinos-regular">
+        <div class="desc ">
             {{ desc }}
         </div>
         <div class="line-with-text">
             <span> Dimensions </span>
         </div>
-        <div class="desc tinos-regular">
+        <div class="desc ">
             {{ dimensions }}
         </div>
         <div class="line-with-text">
             <span> Find them on </span>
         </div>
-        <div class="ig-logo tinos-regular">
+        <div class="ig-logo ">
             <div class="img">
                 <img src="{% static 'red ig logo.png' %}" alt="" id="logo-ig">
             </div>
             <div class="text">
-                <p id="ig-tag">@{{brand_username}}</p>
+                <p id="ig-tag">{{brand_username}}</p>
             </div>
 
         </div>
@@ -280,10 +281,10 @@
 
     <!-- Page 2: Images -->
     <div class="page column-2">
-        <div class="header-2 tinos-regular">
+        <div class="header-2 ">
             {{ brandname }}
         </div>
-        <div class="header-2 tinos-regular" id="time">
+        <div class="header-2 " id="time">
             {% if auctionable == 1%}
             <p id="countdown"></p>
             {% elif auctionable == 0 %}
@@ -300,13 +301,13 @@
             Winner: {{winner}}
             {% endif %}
         </div>
-        {% if auctionable == -1 %}
-        <div class="header-2 tinos-regular" id="check-email">
+        {% if auctionable == -1  and W%}
+        <div class="header-2 " id="check-email">
             Check your email!
         </div>
         {% endif %}
         {% if remaining > 0 %}
-        <div class="header-2 tinos-regular" id="cooldown">
+        <div class="header-2 " id="cooldown">
             Bid again in {{remaining}} seconds
         </div>
         {% endif %}
@@ -319,11 +320,11 @@
 
     <!-- Page 3: Bidding -->
     <div class="page column-3">
-        <p class="pdetails tinos-regular">Biddings</p>
+        <p class="pdetails ">Biddings</p>
         <hr class="underline">
-        <p id="chb" class="tinos-regular">Current Highest Bid:</p>
-        <div class="highest-bid tinos-regular">{{ highest }}</div>
-        <div class="latest-bids tinos-regular" id="bids">
+        <p id="chb" class="">Current Highest Bid:</p>
+        <div class="highest-bid ">{{ highest }}</div>
+        <div class="latest-bids " id="bids">
 
         </div>
         <div class="line-with-text">
