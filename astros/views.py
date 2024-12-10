@@ -28,7 +28,13 @@ else:
 
 
 def home(request):
-    return render(request, 'index.html', context={'date': date})  
+    user_agent = request.META.get('HTTP_USER_AGENT', '')
+    if 'Mobile' in user_agent:
+        return HttpResponseRedirect('/landing/0')
+    elif 'Tablet' in user_agent or 'iPad' in user_agent:
+        return HttpResponseRedirect('/landing/0')
+    else:
+        return render(request, 'index.html', context={'date': date})  
 
 def land(request):
     return HttpResponseRedirect('/landing/0')
@@ -74,6 +80,6 @@ def landing(request, index):
                                                     'index': index,
                                                     'fs': fs,})
     else:
-        return HttpResponse("Sorry. We are out of products. Please come back later.")
+        return render(request, 'products_dne.html')
 
 

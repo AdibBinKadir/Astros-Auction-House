@@ -83,6 +83,11 @@ def products(request, index, scr):
 
     bids = [str(bid) for bid in bids]
 
+    if len(brand_username) > 8:
+        fs = 8
+    else:
+        fs = 12.5
+
 
     context = {
         'desc': desc,
@@ -100,6 +105,7 @@ def products(request, index, scr):
         'brand_username': brand_username,
         'verified': verified,
         'W': W,
+        'fs': fs,
 
     }
 

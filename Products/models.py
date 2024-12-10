@@ -7,13 +7,13 @@ class Product(models.Model):
     id = models.AutoField(primary_key=True)
 
     def save(self, *args, **kwargs):
-        if not Product.objects.exists():
-            self.id = 1
-        else:
-            max_id = Product.objects.aggregate(models.Max('id'))['id__max']
-            self.id = max_id + 1 if max_id else 1
+        if not self.pk:  # Check if the product is being created (no primary key yet)
+            if not Product.objects.exists():
+                self.id = 1
+            else:
+                max_id = Product.objects.aggregate(models.Max('id'))['id__max']
+                self.id = max_id + 1 if max_id else 1
         super().save(*args, **kwargs)
-    
     product_name = models.CharField(max_length=255)
     brand_name = models.CharField(max_length=255)
     starting_price = models.IntegerField()
