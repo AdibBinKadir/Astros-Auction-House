@@ -49,6 +49,13 @@ def products(request, index, scr):
 
     server_timezone = pytz.timezone('Asia/Dhaka')  # Replace with your server's timezone
     startdt_aware = products[index].startdt.astimezone(server_timezone)
+    hour = startdt_aware.strftime('%H')
+    if int(hour) > 12:
+        hour = str(int(hour) - 12)
+        md = 'PM'
+    else:
+        md = 'AM'
+    minute = startdt_aware.strftime('%M')
 
     end_date = startdt_aware + datetime.timedelta(minutes=30)
     enddt_aware = end_date.astimezone(server_timezone)
@@ -106,6 +113,9 @@ def products(request, index, scr):
         'verified': verified,
         'W': W,
         'fs': fs,
+        'hour': hour,
+        'minute': minute,
+        'md': md,
 
     }
 
@@ -166,6 +176,14 @@ def right_prod(request, index):
     server_timezone = pytz.timezone('Asia/Dhaka')  # Replace with your server's timezone
     startdt_aware = products[index].startdt.astimezone(server_timezone)
 
+    hour = startdt_aware.strftime('%H')
+    if int(hour) > 12:
+        hour = str(int(hour) - 12)
+        md = 'PM'
+    else:
+        md = 'AM'
+    minute = startdt_aware.strftime('%M')
+
     end_date = startdt_aware + datetime.timedelta(minutes=30)
     enddt_aware = end_date.astimezone(server_timezone)
     
@@ -208,6 +226,9 @@ def right_prod(request, index):
         'remaining': remaining,
         'verified': verified,
         'W': W,
+        'hour': hour,
+        'minute': minute,
+        'md': md,
     }
 
 

@@ -225,7 +225,7 @@
     margin-bottom: 1vw;
 }
 .btn-primary{
-    background-color: #d1756e;
+    background-color: #b22222;
     color: white;
     width: 48%;
     height: 60%;
@@ -233,7 +233,7 @@
     border-radius: 1vw;
 }
 .btn-primary:hover{
-            background-color: #C87F7A;
+            background-color: #8b1a1a;
         }
 
 .prod-img{
@@ -319,13 +319,13 @@
             <div class="header-2 ">
                 {{brandname}}
             </div>
-            <div class="header-2 " id="time">
+            <div class="header-2 " id="time" {% if not user.is_authenticated %} onclick="red_login()" {%endif%}>
                 {% if auctionable == 1%}
                 <p id="countdown"></p>
                 {% elif auctionable == 0 %}
                 {% if user.is_authenticated %}
                 {% if verified %}
-                Auction is yet to start
+                Auction starts at {{hour}}:{{minute}} {{md}}
                 {%else%}
                 Verify your email to bid
                 {% endif %}
@@ -381,6 +381,9 @@
         </div>
         
         <script>
+            function red_login(){
+                window.location.href = "/login";
+            }
             function left(){
                 var ind = {{index}};
                 console.log("left function called with index:", ind);

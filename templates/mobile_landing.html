@@ -184,11 +184,12 @@ body {
   top: 3.2vw;
   height: calc(37 * var(--rpx));
   color: #ae9d87;
-  font-size: calc({{fs}}vw * 0.9);
+  font-size: 5.4vw;
   line-height: calc(24.204544067382812 * var(--rpx));
   text-align: left;
   z-index: 21;
 }
+
 .product-name {
   display: flex;
   align-items: center;
@@ -440,6 +441,17 @@ body {
     // window.onload = function() {
     //     setTimeout(load, 500);
     // };
+
+    document.addEventListener("DOMContentLoaded", load);
+
+    function load(){
+      brands = document.getElementsByClassName("brand-name");
+      for (var i = 0; i < brands.length; i++){
+        if (brands[i].innerHTML.length > 8){
+          brands[i].style.fontSize = "2.7vw";
+        }
+      }
+    }
     
     function showProd(prod_id){
       var index = prod_id-1;
@@ -454,10 +466,6 @@ body {
         window.location.href = "/";
     }
     
-    function load(){
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("main").style.display = "block";
-    }
     var countDownDate = new Date("{{date}}").getTime();
     
     

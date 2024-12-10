@@ -26,7 +26,12 @@ SECRET_KEY = 'django-insecure-v-qyyuyw*dy^=#0t4(5c1vdj3dw=^0zz*!@xe^3ty!b68y#8qy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['astrosauc.com', 'www.astrosauc.com', '127.0.0.1']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://astrosauc.com',
+    'https://www.astrosauc.com',
+]
 
 
 
@@ -34,8 +39,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'victor.blake2002@gmail.com'
-EMAIL_HOST_PASSWORD = 'eyhb vyot ujws lctb'
+EMAIL_HOST_USER = 'astrosauctionhouse@gmail.com'
+EMAIL_HOST_PASSWORD = 'nliv fejw kilw lyti'
 
 # Application definition
 

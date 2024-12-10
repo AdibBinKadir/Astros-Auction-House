@@ -167,7 +167,7 @@
     flex-direction: row;
 }
 .btn-primary{
-    background-color: #d1756e;
+    background-color: #b22222;
     color: white;
     width: 48%;
     height: 60%;
@@ -175,7 +175,7 @@
     border-radius: 1vw;
 }
 .btn-primary:hover{
-            background-color: #C87F7A;
+            background-color: #8b1a1a;
         }
 
 .prod-img{
@@ -208,20 +208,22 @@
 #cooldown{
     background-color: #b22222;
 }
+
+
 </style>
 
 <div class="wrapper">
-    <div class="column-2" onclick="center()">
+    <div class="column-2" onclick="center()" {% if not user.is_authenticated %} onlick="red_login()" {%endif%}>
         <div class="header-2 ">
             {{brandname}}
         </div>
-        <div class="header-2 " id="time">
+        <div class="header-2 " id="time" {% if not user.is_authenticated %} onclick="red_login()" {%endif%}>
             {% if auctionable == 1%}
             <p id="countdown"></p>
             {% elif auctionable == 0 %}
             {% if user.is_authenticated %}
             {% if verified %}
-            Auction is yet to start
+            Auction starts at {{hour}}:{{minute}} {{md}}
             {%else%}
             Verify your email to bid
             {% endif %}
@@ -232,6 +234,7 @@
             Winner: {{winner}}
             {% endif %}
         </div>
+
         {% if auctionable == -1 and W %}
         <div class="header-2 " id="check-email">
             Check your email!
@@ -277,6 +280,9 @@
 </div>
 
 <script>
+    function red_login(){
+        window.location.href = "/login";
+    }
     function center(){
         let ind = {{index}};
         window.location.href = "/products/"+String(ind);

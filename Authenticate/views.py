@@ -121,7 +121,7 @@ def register_user(request):
         try:
             user = User.objects.create_user(username=username, email=email, password=password)
             UserProfile.objects.create(user=user, phone=phone, address=address, fullname=fullname)
-            messages.success(request, 'User created successfully. Check your email for verification link')
+            messages.success(request, 'Account successfully created. Please check your email for the verification link. If you do not see it in your inbox, kindly check your spam folder.')
             send_verification_email(request, user)
             return render(request, 'register.html')
         except Exception as e:

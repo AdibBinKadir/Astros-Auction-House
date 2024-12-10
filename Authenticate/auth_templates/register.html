@@ -11,14 +11,14 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #F5F5F5;
+
         }
 
         .right-side {
-            position: fixed;
             top: 0;
             right: 0;
             width: 100vw;
-            height: 100vh;
+            height: 120vh;
             background-color: #E1CFB9;
             z-index: 1000; /* Ensure it displays over everything else */
             display: flex;
@@ -32,7 +32,6 @@
             height: 10%;
             display: flex;
             justify-content: flex-start;
-            margin: auto;
         }
 
         .bottom-row {
@@ -44,17 +43,18 @@
             align-items: center;
             border-radius: 4.875rem;
             background: #FFF2E2;
-            margin: auto;
+            margin-left: auto;
+            margin-right: auto;
             flex-direction: column;
             color: #C0A78F;
             padding: 2rem;
             box-sizing: border-box;
+            margin-top: 1rem;
         }
 
         #reroute {
             width: 2.5rem;
             height: 2.5rem;
-            margin-top: 1.5rem;
             margin-left: 5rem;
         }
 
@@ -89,7 +89,7 @@
         }
 
         .btn-primary {
-            background-color: #D5918A;
+            background-color: #b22222;
             color: white;
             border: none;
             padding: 0.75rem;
@@ -99,9 +99,10 @@
             cursor: pointer;
         }
 
-        .btn-primary:hover, .btn-primary:active, .btn-primary:focus{
-            background-color: #C87F7A;
+        .btn-primary:hover{
+            background-color: #8b1a1a;
         }
+
 
         .register {
             color: #D5918A;
@@ -138,7 +139,7 @@
         .alert{
             width: auto;
             margin: auto;
-            margin-top: 1rem;
+            margin-top: 6rem;
             margin-bottom: 1rem;
         }
     </style>
@@ -160,6 +161,9 @@
         </div>
         <div class="bottom-row">
             <img src="{% static 'acc-img.png' %}" alt="Account" id="person-img">
+            <p>
+                Any inappropriate names and usersnames will be banned.
+            </p>
             <form method="POST" class="w-75">
                 {% csrf_token %}
                 <div class="form-group">
@@ -202,5 +206,10 @@
 
         </div>
     </div>
+    <script>
+        document.getElementById('reroute').addEventListener('click', () => {
+            window.location.href = '/';
+        });
+    </script>
 </body>
 </html>

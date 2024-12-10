@@ -8,26 +8,33 @@ import pytz
 
 products = Product.objects.all()
 
-if products.exists():
-    earliest_product = products.order_by('startdt').first()
-    latest_product = products.order_by('startdt').last()
-    dtime_naive = earliest_product.startdt
-    server_timezone = pytz.timezone('Asia/Dhaka')  # Replace with your server's timezone
-    dtime = dtime_naive.astimezone(server_timezone)
-    date = dtime.strftime('%b %d, %Y %H:%M:%S')
-    month = dtime.strftime('%B')
-    day = dtime.strftime('%d')
-    end_date_naive = latest_product.startdt + datetime.timedelta(minutes=30)
-    end_date = end_date_naive.astimezone(server_timezone)
+date = "Nov 30, 2024 22:56:00"
+dtime = datetime.datetime.strptime(date, '%b %d, %Y %H:%M:%S')
+end_date = "Nov 30, 2024 23:26:00"
+month = "Nov"
+day = "30"
 
-else:
-    date = "Nov 30, 2024 22:56:00"
-    dtime = datetime.datetime.strptime(date, '%b %d, %Y %H:%M:%S')
-    end_date = "Nov 30, 2024 23:26:00"
+def change_info():
+    global date, dtime, end_date, month, day
+    if products.exists():
+        earliest_product = products.order_by('startdt').first()
+        latest_product = products.order_by('startdt').last()
+        dtime_naive = earliest_product.startdt
+        server_timezone = pytz.timezone('Asia/Dhaka')  # Replace with your server's timezone
+        dtime = dtime_naive.astimezone(server_timezone)
+        date = dtime.strftime('%b %d, %Y %H:%M:%S')
+        month = dtime.strftime('%B')
+        day = dtime.strftime('%d')
+        end_date_naive = latest_product.startdt + datetime.timedelta(minutes=30)
+        end_date = end_date_naive.astimezone(server_timezone)
+
+    else:
+        pass
 
 
 
 def home(request):
+    change_info()
     user_agent = request.META.get('HTTP_USER_AGENT', '')
     if 'Mobile' in user_agent:
         return HttpResponseRedirect('/landing/0')
@@ -37,9 +44,11 @@ def home(request):
         return render(request, 'index.html', context={'date': date})  
 
 def land(request):
+    change_info()
     return HttpResponseRedirect('/landing/0')
 
 def landing(request, index):
+    change_info()
     products = Product.objects.all()
     if products.exists():
         if index >= len(products):
@@ -56,6 +65,8 @@ def landing(request, index):
             fs = 3
         else:
             fs = 6
+        
+        print(fs)
 
         if 'Mobile' in user_agent:
             return render(request, 'mobile_landing.html', context={'date': date, 
