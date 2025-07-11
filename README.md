@@ -8,7 +8,7 @@ python -m venv venv
 source venv/Scripts/activate
 ```
 4. Then install all the dependencies typing:
-```pip install -r requirement```
+```pip install -r requirements```
 5. Finally, to run the server, type:
 ```python manage.py runserver```
 Then the link generated should take you to the website.
