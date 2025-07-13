@@ -353,7 +353,7 @@
         <p class="pdetails ">Biddings</p>
         <hr class="underline">
         <p id="chb" class="">Current Highest Bid:</p>
-        <div class="highest-bid ">{{ highest }}</div>
+        <div class="highest-bid " id="highest-bid-num">{{ highest }}</div>
         <div class="latest-bids " id="bids">
 
         </div>
@@ -384,6 +384,11 @@
                 .then(response => response.json())
                 .then(data => {
                     const bidsContainer = document.getElementById('bids');
+                    if (data.length > 0) {
+                        const amounts = data.map(bid => bid.bid_amount);
+                        const maxBid = Math.max(...amounts);
+                        document.getElementById('highest-bid-num').textContent = maxBid;
+                    }
                     bidsContainer.innerHTML = ''; // Clear existing bids
                     data.forEach(bid => {
                         const bidElement = document.createElement('div');
@@ -399,6 +404,14 @@
 
         // Initial fetch
         fetchBids();
+
+        const snapContainer = document.getElementById('snap-container');
+        snapContainer.addEventListener('wheel', function(event) {
+            if (event.deltaY !== 0) {
+                event.preventDefault();
+                snapContainer.scrollTop += event.deltaY * 0.5; // Adjust the multiplier to change sensitivity
+            }
+        });
 </script>
 
 {% if auctionable == 1 %}

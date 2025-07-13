@@ -139,8 +139,6 @@
         .alert{
             width: auto;
             margin: auto;
-            margin-top: 6rem;
-            margin-bottom: 1rem;
         }
     </style>
 </head>
@@ -149,18 +147,18 @@
     {% load static %}
 
     <div class="right-side">
-        {% if messages%}
-        {% for message in messages %}
-        <div class="alert alert-primary" role="alert">
-            {{ message }} 
-          </div>
-        {% endfor %}
-        {% endif %}
         <div class="top-row">
             <img src="{% static 'Component 3 – 1.png' %}" alt="Back" id="reroute">
         </div>
         <div class="bottom-row">
             <img src="{% static 'acc-img.png' %}" alt="Account" id="person-img">
+            {% if messages%}
+            {% for message in messages %}
+            <div class="alert alert-primary" role="alert">
+                {{ message }} 
+              </div>
+            {% endfor %}
+            {% endif %}
             <p>
                 Any inappropriate names and usersnames will be banned.
             </p>

@@ -66,7 +66,7 @@ def landing(request, index):
         else:
             fs = 6
         
-        print(fs)
+        
 
         if 'Mobile' in user_agent:
             return render(request, 'mobile_landing.html', context={'date': date, 

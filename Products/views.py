@@ -50,12 +50,15 @@ def products(request, index, scr):
     server_timezone = pytz.timezone('Asia/Dhaka')  # Replace with your server's timezone
     startdt_aware = products[index].startdt.astimezone(server_timezone)
     hour = startdt_aware.strftime('%H')
-    if int(hour) > 12:
+    if int(hour) >= 12:
         hour = str(int(hour) - 12)
         md = 'PM'
     else:
         md = 'AM'
+    if int(hour) == 0:
+        hour = '12'
     minute = startdt_aware.strftime('%M')
+    
 
     end_date = startdt_aware + datetime.timedelta(minutes=30)
     enddt_aware = end_date.astimezone(server_timezone)
@@ -177,7 +180,7 @@ def right_prod(request, index):
     startdt_aware = products[index].startdt.astimezone(server_timezone)
 
     hour = startdt_aware.strftime('%H')
-    if int(hour) > 12:
+    if int(hour) >= 12:
         hour = str(int(hour) - 12)
         md = 'PM'
     else:

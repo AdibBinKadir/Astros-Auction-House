@@ -307,9 +307,6 @@
             <span> Find them on </span>
         </div>
         <div class="ig-logo ">
-            <div class="img">
-                <img src="{% static 'red ig logo.png' %}" alt="" id="logo-ig">
-            </div>
             <div class="text">
                 <p id="ig-tag">{{brand_username}}</p>
             </div>
@@ -381,6 +378,12 @@
         </div>
         
         <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var igTag = document.getElementById("ig-tag");
+            if (igTag.textContent.length > 10) {
+                igTag.style.fontSize = "2vw";
+            }
+        });
             function red_login(){
                 window.location.href = "/login";
             }
@@ -411,7 +414,7 @@
                 })
                 .catch(error => console.error('Error fetching bids:', error));
         }
-
+        
         // Fetch bids every 5 seconds
         setInterval(fetchBids, 5000);
 
