@@ -451,103 +451,78 @@ body {
 
 
 <script>
-// window.onload = function() {
-//     setTimeout(load, 500);
-// };
-
-function showProd(){
-  var index = {{index}};
-    window.location.href = "/products/" + String(index);
+function showProd() {
+    const index = {{ index }};
+    window.location.href = `/products/${index}`;
 }
 
-var timer = document.getElementsByClassName("row-1")[0];
-timer.addEventListener('click', redirect);
-
-var right = document.getElementById("right");
-right.onclick = function() {
-    var index = {{index}}+1;
-    window.location.href = "/landing/"+String(index);
-};
-
-
-var left = document.getElementById("left");
-left.onclick = function() {
-  var index = {{index}}-1;
-  if (index < 0){
-    index = 0;
-  }
-  window.location.href = "/landing/"+String(index);
-};
-
-function redirect(){
+function redirect() {
     window.location.href = "/";
 }
 
-function load(){
+function load() {
     document.getElementById("loading").style.display = "none";
     document.getElementById("main").style.display = "block";
 }
-var countDownDate = new Date("{{date}}").getTime();
 
+function updateCountdown() {
+    const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" })).getTime();
+    const distance = countDownDate - now;
 
-// Get today's date and time
-var now = new Date().toLocaleString("en-US", {timeZone: "Asia/Dhaka"});
-now = new Date(now).getTime();
+    const timerRow = document.querySelector(".row-1");
 
+    if (distance < -30 * 60 * 1000) {
+        clearInterval(timerInterval);
+        timerRow.innerHTML = `<p class="timer">Auction has ended!</p>`;
+        return;
+    }
 
-var distance = countDownDate - now;
+    if (distance < 0) {
+        timerRow.innerHTML = `<p class="timer">Auction has started!</p>`;
+        return;
+    }
 
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-// Time calculations for days, hours, minutes and seconds
-var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-// Display the result in the element with id="demo"
-document.getElementById("hours").innerHTML = hours;
-document.getElementById("minutes").innerHTML = minutes;
-document.getElementById("seconds").innerHTML = seconds;
-document.getElementById("days").innerHTML = days;
-
-
-// If the count down is finished, write some text
-if (distance < 0) {
-document.getElementsByClassName("row-1")[0].innerHTML = "<p class=\"timer\">Auction is live!</p>";
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
 }
 
+function setupNavigation() {
+    const index = {{ index }};
+    const right = document.getElementById("right");
+    const left = document.getElementById("left");
 
-// Update the count down every 1 second
-var x = setInterval(function() {
+    if (right) {
+        right.onclick = () => window.location.href = `/landing/${index + 1}`;
+    }
 
+    if (left) {
+        const prevIndex = Math.max(index - 1, 0);
+        left.onclick = () => window.location.href = `/landing/${prevIndex}`;
+    }
 
-var now = new Date().toLocaleString("en-US", {timeZone: "Asia/Dhaka"});
-now = new Date(now).getTime();
-
-// Find the distance between now and the count down date
-var distance = countDownDate - now;
-
-
-// Time calculations for days, hours, minutes and seconds
-var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-// Display the result in the element with id="demo"
-document.getElementById("hours").innerHTML = hours;
-document.getElementById("minutes").innerHTML = minutes;
-document.getElementById("seconds").innerHTML = seconds;
-document.getElementById("days").innerHTML = days;
-
-
-// If the count down is finished, write some text
-if (distance < 0) {
-clearInterval(x);
-document.getElementsByClassName("row-1")[0].innerHTML = "<p class=\"timer\">Auction has started!</p>";
+    const timerRow = document.querySelector(".row-1");
+    if (timerRow) {
+        timerRow.addEventListener("click", redirect);
+    }
 }
-}, 1000);
+
+const countDownDate = new Date("{{ date }}").getTime();
+let timerInterval;
+
+document.addEventListener("DOMContentLoaded", () => {
+    setupNavigation();
+    updateCountdown(); // initial call
+    timerInterval = setInterval(updateCountdown, 1000);
+});
 </script>
+
 
 
 {%endblock%}

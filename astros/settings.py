@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Authenticate.apps.AuthenticateConfig',
     'Products.apps.ProductsConfig',
+    'Pages.apps.PagesConfig',
 
 ]
 

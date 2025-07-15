@@ -38,7 +38,7 @@ def get_time_info():
 
 def home(request):
     """
-    Redirects based on device type or shows index page with the auction countdown.
+    Displays the active countdown with device-specific rendering.
     """
     time_info = get_time_info()
     user_agent = request.META.get('HTTP_USER_AGENT', '')
@@ -51,7 +51,7 @@ def home(request):
 
 def land(request):
     """
-    Redirect to the landing page index 0.
+    If the user just types the landing URL, redirect to the first product.
     """
     return redirect('/landing/0')
 
@@ -96,5 +96,3 @@ def landing(request, index):
     })
 
     return render(request, 'landing.html', context)
-
-
