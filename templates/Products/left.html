@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/left.css' %}">
+
+<div class="wrapper">
+    <div class="column-1">
+        <p class="pdetails ">Product Details</p>
+        <hr id="pdunderline">
+        <div class="desc">
+            <p class="pdesc ">{{desc}}</p>
+        </div>
+        <div class="line-with-text">
+            <span> Dimensions </span>
+        </div>
+        <div class="dimensions">
+            <p class="pdesc ">{{dimensions}}</p>
+        </div>
+        <div class="line-with-text">
+            <span> Find them on </span>
+        </div>
+        <div class="ig-logo ">
+            <div class="img">
+                <img src="{% static 'images/red ig logo.png' %}" alt="" id="logo-ig">
+            </div>
+            <div class="text">
+                <p id="ig-tag">@{{brand_username}}</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="column-2"  onclick="center()">
+        <div class="header-2 ">
+            {{brandname}}
+        </div>
+        {% for u in urls %}
+        <div class="rectangle-b">
+            <img src="{{u}}" alt="" class="prod-img">
+          </div>
+          {% endfor %}
+    </div>
+
+</div>
+
+<script>
+    function center(){
+        let ind = {{index}};
+        window.location.href = "/products/"+String(ind);
+    }
+</script>
+
+{% endblock %}

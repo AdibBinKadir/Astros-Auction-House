@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Astros BD Register</title>
+    <link rel="stylesheet" href="{% static 'css/mobile_logout.css' %}">
+</head>
+<body>
+
+
+
+    <div class="right-side">
+        {% if messages%}
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }} 
+          </div>
+        {% endfor %}
+        {% endif %}
+        <div class="top-row">
+            <img src="{% static 'images/Component 3 – 1.png' %}" alt="Back" id="reroute">
+        </div>
+        <div class="bottom-row">
+            <img src="{% static 'images/acc-img.png' %}" alt="Account" id="person-img">
+            <form class="w-75" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-block">Logout</button>
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'mobile_logout.js' %}"></script>
+</body>
+</html>

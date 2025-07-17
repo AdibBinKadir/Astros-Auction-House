@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Astros BD Register</title>
+    <link rel="stylesheet" href="{% static 'css/resetpass.css' %}">
+
+</head>
+<body>
+
+    {% load static %}
+
+    <div class="right-side">
+        {% if messages%}
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }} 
+          </div>
+        {% endfor %}
+        {% endif %}
+        <div class="top-row">
+            <img src="{% static 'images/Component 3 – 1.png' %}" alt="Back" id="reroute">
+        </div>
+        <div class="bottom-row">
+            <img src="{% static 'images/acc-img.png' %}" alt="Account" id="person-img">
+            <form method="POST" class="w-75">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="newpass1">Enter new password:</label>
+                    <input type="password" class="form-control" id="newpass1" name="newpass1" required>
+                </div>
+                <div class="form-group">
+                    <label for="newpass2">Confirm new password:</label>
+                    <input type="password" class="form-control" id="newpass2" name="newpass2" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Forgot Password</button>
+        </div>
+    </div>
+</body>
+</html>

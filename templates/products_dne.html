@@ -2,72 +2,10 @@
 
 {% block content %}
 
-    <style>
-        .row-1 {
-            display: flex;
-            justify-content: center;
-            flex-direction: row;
-            cursor: pointer;
-            margin: auto;
-            height: 100%;
-        }
-        .row-1 > div {
-            display: flex;
-        }
-
-
-        .timer {
-            text-align: center;
-            font-size: 7vw;
-            font-family: "Lunasima", sans-serif;
-            font-weight: 700;
-            font-style: normal;
-            color: #c8746c;
-            margin-left: 0.5vw;
-            margin-right: 0.5vw;
-            display: flex;
-            flex-direction: column;
-            margin: auto;
-        }
-        .loader {
-            margin-top: 10vw; /* Adjusted margin to add space on top */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
-        }
-        #load-img{
-            animation: oscillateOpacity 1s infinite;
-        }
-        #main{
-            width: 90vw;
-            height: 100vw;
-            margin: auto;
-            display: none;
-            height: 100vh;
-        }
-        @keyframes oscillateOpacity {
-        0%, 100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0.5;
-    }
-}
-@keyframes oscillateColor {
-    0%, 100% {
-        color: #c8746c;
-    }
-    50%{
-        color: #a82424;
-    }
-}
-
-    </style>
+<link rel="stylesheet" href="{% static 'css/products_dne.css' %}">
     {% load static %}
     <div class="loader" id="loading">
-    <img src="{% static 'landing_page_anim_-2-removebg-preview.png' %}" alt="" id="load-img">
+    <img src="{% static 'images/landing_page_anim_-2-removebg-preview.png' %}" alt="" id="load-img">
         
     </div>
     <div id="main">
@@ -78,13 +16,5 @@
             <p> No products are on auction right now. Please check back later!</p>
     </div>
     </div>
-<script>
-    window.onload = function() {
-    setTimeout(load, 1000);
-};
-    function load(){
-    document.getElementById("loading").style.display = "none";
-    document.getElementById("main").style.display = "block";
-}
-</script>
+    <script src="{% static 'js/products_dne.js'}"></script>
 {% endblock %}

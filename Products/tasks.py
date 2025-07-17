@@ -8,7 +8,6 @@ from django.template.loader import render_to_string
 import time
 import threading
 from django.core.mail import EmailMultiAlternatives
-import schedule
 
 
 def send_winner_email(prod_id):

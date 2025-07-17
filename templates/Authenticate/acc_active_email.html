@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/acc_active_email.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Verify your account</h1>
+        </div>
+        <div class="content">
+            <p>Dear {{ user.username }},</p>
+            <p>Thank you for signing up! To complete your account setup, please verify your email address by clicking the link below:  </p>
+            <a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}" class="button">Activate Account</a>
+        </div>
+        <div class="footer">
+            <p>If you did not request this, please ignore this email.</p>
+            <p>Thank you,</p>
+            <p>Astro’s Auction House</p>
+        </div>
+    
+    </div>
+</body>
+</html>

@@ -7,6 +7,5 @@ urlpatterns = [
     path('left/<int:index>', views.left_prod),
     path('right/<int:index>', views.right_prod),
     path('bid/<int:index>/<int:amount>', views.bid),
-    path('delete', views.delete_all_bids),
     path('get_bids/<int:product_id>/', views.get_info, name='get_bids'),
 ]

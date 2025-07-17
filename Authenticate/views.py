@@ -43,7 +43,7 @@ def reset_password(request, uidb64, token):
         confirm = request.POST.get("newpass2")
         if password != confirm:
             messages.error(request, "Passwords do not match")
-            return render(request, "resetpass.html")
+            return render(request, "Authenticate/resetpass.html")
 
         if email_verification_token.check_token(user, token):
             user.set_password(password)
@@ -55,7 +55,7 @@ def reset_password(request, uidb64, token):
 
     if email_verification_token.check_token(user, token):
         login(request, user)
-        return render(request, "resetpass.html")
+        return render(request, "Authenticate/resetpass.html")
 
     return HttpResponse("Activation link is invalid!")
 
@@ -72,11 +72,11 @@ def register_user(request):
 
         if password != confirm:
             messages.error(request, "Passwords do not match")
-            return render(request, "register.html")
+            return render(request, "Authenticate/register.html")
 
         if User.objects.filter(username=username).exists():
             messages.error(request, "Username already exists")
-            return render(request, "register.html")
+            return render(request, "Authenticate/register.html")
 
         try:
             user = User.objects.create_user(username=username, email=email, password=password)
@@ -86,11 +86,11 @@ def register_user(request):
         except Exception as e:
             messages.error(request, f"Error creating user: {e}")
 
-    return render(request, "register.html")
+    return render(request, "Authenticate/register.html")
 
 
 def login_user(request):
-    template = "mobile_login.html" if is_mobile_or_tablet(request) else "login.html"
+    template = "Authenticate/mobile_login.html" if is_mobile_or_tablet(request) else "Authenticate/login.html"
 
     if request.method == "POST":
         username = request.POST.get("username")
@@ -109,7 +109,7 @@ def logout_user(request):
         logout(request)
         return redirect("/")
 
-    template = "mobile_logout.html" if is_mobile_or_tablet(request) else "logout.html"
+    template = "Authenticate/mobile_logout.html" if is_mobile_or_tablet(request) else "Authenticate/logout.html"
     return render(request, template)
 
 
@@ -128,5 +128,5 @@ def forgotpassword(request):
         except User.DoesNotExist:
             messages.error(request, "Email not found")
 
-    return render(request, "forgotpassword.html")
+    return render(request, "Authenticate/forgotpassword.html")
 

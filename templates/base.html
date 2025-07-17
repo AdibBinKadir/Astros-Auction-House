@@ -2,136 +2,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astros BD {% block title %}{% endblock %}</title>
-    <link rel="icon" href="{% static 'btrfly.png' %}" type="image/x-icon">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Lunasima:wght@400;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Lunasima:wght@400;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Lunasima:wght@400;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.0/luxon.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Lunasima:wght@400;700&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Encode+Sans+Semi+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Lunasima:wght@400;700&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astros BD {% block title %}{% endblock %}</title>
 
-    <style>
+  <link rel="icon" href="{% static 'images/btrfly.png' %}" type="image/x-icon">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
 
-
-        
-        body {
-            background-image: url("{% static 'bg_grad_2.png' %}");
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-position: center;
-            font-family: "Noto Serif", serif;
-            font-optical-sizing: auto;
-            font-weight: 600;
-            font-style: normal;
-            font-variation-settings:
-                "wdth" 100;
-        }
-
-        .navbar-nav .nav-link {
-            font-size: 1.25vw; /* Increase font size */
-            padding: 1vw; /* Increase padding for better vertical alignment */
-        }
-        .navbar-nav {
-            align-items: center; /* Center items vertically */
-            height: 5vw;
-
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .navbar-img{
-            width: 14vw;
-            height: 5vw;
-        }
-        .navbar-img2{
-            width: 4vw;
-            height: 4vw;
-        }
-        .horizontal{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            width: 100%;
-        }
-        .footer {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem;
-            background-color: #e0ccb4;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            z-index: 2000;
-        }
-        .footer img {
-            width: 3vw;
-            height: 3vw;
-        }
-        @media (max-width: 768px) {
-            .footer img {
-                width: 6vw;
-                height: 6vw;
-            }
-        }
-        
-    </style>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Condensed:wght@100;900&family=Lunasima:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,700;1,700&family=Noto+Serif:ital,wght@0,900;1,900&family=Tinos:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/2.3.0/luxon.min.js"></script>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #e0ccb4;">
-        <div class="horizontal">
-        <div class="navbar w-100 order-1 order-md-0">
-            <ul class="navbar-nav nav mr-auto">
-                <img src="{% static 'red logo.png'%}" alt="" class="navbar-img">
-            </ul>
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #e0ccb4;">
+    <div class="horizontal">
+      <div class="navbar w-100 order-1 order-md-0">
+        <ul class="navbar-nav nav mr-auto">
+          <img src="{% static 'images/red logo.png'%}" alt="" class="navbar-img">
+        </ul>
+      </div>
 
-        <div class="navbar w-100 order-3">
-            <ul class="navbar-nav nav ml-auto">
-                <li class="nav-item">
-                    {% if user.is_authenticated %}
-                    <img src="{% static 'output-onlinepngtools.png' %}" alt="" class="navbar-img2" id="logout">
-                    {% else %}
-                    <img src="{% static 'Component 3 – 1.png' %}" alt="" class="navbar-img2" id="login">
-                    {% endif %}
-                </li>
-            </ul>
-        </div>
-        </div>
-    </nav>
+      <div class="navbar w-100 order-3">
+        <ul class="navbar-nav nav ml-auto">
+          <li class="nav-item">
+            {% if user.is_authenticated %}
+              <img src="{% static 'images/output-onlinepngtools.png' %}" alt="" class="navbar-img2" id="logout">
+            {% else %}
+              <img src="{% static 'images/Component 3 – 1.png' %}" alt="" class="navbar-img2" id="login">
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
+  {% block content %}{% endblock %}
 
-        {% block content %}
-        {% endblock %}
+  <!-- Custom JS -->
+  <script src="{% static 'js/base.js' %}"></script>
 
-    <script>
-        var logo = document.getElementsByClassName('navbar-img')[0];
-        logo.addEventListener('click', function(){
-            window.location.href = "/";
-        });
-        var log1 = document.getElementById('login');
-        var log2 = document.getElementById('logout');
-        if (log2){
-            log2.addEventListener('click', function(){
-                window.location.href = "/login/logout_user";
-            });
-        }else if (log1){
-            log1.addEventListener('click', function(){
-                window.location.href = "/login";
-            });
-        }
-    </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+  <!-- Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
