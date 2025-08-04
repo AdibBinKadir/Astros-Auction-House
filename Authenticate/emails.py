@@ -11,7 +11,7 @@ from .tokens import email_verification_token
 def send_verification_email(request, user):
     subject = "Verify your account."
     current_site = get_current_site(request)
-    message = render_to_string("acc_active_email.html", {
+    message = render_to_string("Authenticate/acc_active_email.html", {
         "user": user,
         "domain": current_site.domain,
         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
